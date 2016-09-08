@@ -2,6 +2,8 @@ package com.example.user.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -42,5 +44,23 @@ public class PokemonListActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.selected_pokemon_list_action_bar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.action_delete){
+            //TODO
+            return true;
+        }else if (itemId == R.id.action_setting){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -55,21 +55,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option1"
-                android:drawableRight="@drawable/Bulbasaur"
+                android:drawableRight="@drawable/bulbasaur"
                 android:layout_weight="1" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option2"
-                android:drawableRight="@drawable/Charmander"
+                android:drawableRight="@drawable/charmander"
                 android:layout_weight="1" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option3"
-                android:drawableRight="@drawable/Squirtle"
+                android:drawableRight="@drawable/squirtle"
                 android:layout_weight="1" />
         </RadioGroup>
 

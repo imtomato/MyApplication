@@ -54,7 +54,7 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
         return rowView;
     }
 
-    public static class ViewHolder{
+    public static class ViewHolder implements View.OnClickListener{
         View mRowView;
 
         ImageView mAppearanceImg;
@@ -75,7 +75,7 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
             mCurrentHP = (TextView) rowView.findViewById(R.id.curretHP);
             mMaxHP = (TextView) rowView.findViewById(R.id.maxHP);
             mHPBar = (ProgressBar) rowView.findViewById(R.id.hpBar);
-
+            mAppearanceImg.setOnClickListener(this);
         }
 
         //將mRowView連結data
@@ -96,7 +96,24 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
         }
 
 
+        public void setSelected(){
+            mData.isSeleted = !mData.isSeleted;
+            mRowView.setActivated(mData.isSeleted);
 
+
+        }
+
+
+
+
+        //當神奇寶貝圖片被選取時，action_bar可操作
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if(viewId == R.id.appearanceImg){
+                setSelected();
+            }
+        }
     }
 
 

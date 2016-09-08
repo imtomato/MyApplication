@@ -19,6 +19,9 @@ public class OwnedPokemonInfo {
 
     public String[] skills;
 
+    public boolean isSeleted;
+
+
 
 
 }
