@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.myapplication.Main2Activity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/pokemon"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="請輸入個人資訊"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="姓名"
+            android:ems="10"
+            android:id="@+id/nameText"
+            android:layout_marginTop="24dp"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:hint="請輸入姓名" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/nameText"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/optionGroup"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="100dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option1"
+                android:drawableRight="@drawable/Bulbasaur"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option2"
+                android:drawableRight="@drawable/Charmander"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option3"
+                android:drawableRight="@drawable/Squirtle"
+                android:layout_weight="1" />
+        </RadioGroup>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hide"
+            android:id="@+id/infocheck"
+            android:layout_alignBottom="@+id/nameText"
+            android:layout_alignRight="@+id/optionGroup"
+            android:layout_alignEnd="@+id/optionGroup" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="確認"
+            android:id="@+id/confirmBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="55dp" />
+
+    </RelativeLayout>
+</LinearLayout>
