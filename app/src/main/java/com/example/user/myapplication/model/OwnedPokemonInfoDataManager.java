@@ -15,7 +15,7 @@ public class OwnedPokemonInfoDataManager {
 
     Context mContext;
     ArrayList<OwnedPokemonInfo> ownedPokemonInfos;
-
+    ArrayList<OwnedPokemonInfo> initThreePokemonInfos;
 
     public OwnedPokemonInfoDataManager(Context context){
         mContext = context;
@@ -24,6 +24,7 @@ public class OwnedPokemonInfoDataManager {
 
     public void loadListViewData(){
         ownedPokemonInfos = new ArrayList<>();
+        initThreePokemonInfos = new ArrayList<>();
         BufferedReader reader;
         String line = null;
         String[] dataFields = null;
@@ -31,6 +32,17 @@ public class OwnedPokemonInfoDataManager {
 
         //取得Asset資料夾底下的檔案
         try {
+
+            //讀取pokemon_type_name資料
+            reader = new BufferedReader(new InputStreamReader(mContext.getAssets().open("pokemon_types.csv")));
+
+            OwnedPokemonInfo.typeNames = reader.readLine().split(",");
+            reader.close();
+
+
+
+
+            //讀取List資料
             reader = new BufferedReader(new InputStreamReader(mContext.getAssets().open("pokemon_data.csv")));
 
             while((line = reader.readLine())!=null){
@@ -38,9 +50,17 @@ public class OwnedPokemonInfoDataManager {
                 //初始ownedPokemonInfos arrayList 資料
                 ownedPokemonInfos.add(constructPokemonInfo((dataFields)));
             }
-
             reader.close();
 
+            //讀取初始選單三選一資料
+            reader = new BufferedReader(new InputStreamReader(mContext.getAssets().open("init_pokemon_data.csv")));
+
+            while((line = reader.readLine())!=null){
+                dataFields = line.split(",");
+                //初始ownedPokemonInfos arrayList 資料
+                initThreePokemonInfos.add(constructPokemonInfo((dataFields)));
+            }
+            reader.close();
 
 
 
@@ -81,6 +101,10 @@ public class OwnedPokemonInfoDataManager {
 
         return ownedPokemonInfos;
 
+    }
+
+    public ArrayList<OwnedPokemonInfo> getInitPokemonInfos(){
+        return initThreePokemonInfos;
     }
 
 

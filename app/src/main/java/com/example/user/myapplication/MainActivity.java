@@ -1,9 +1,10 @@
 package com.example.user.myapplication;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,7 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,TextView.OnEditorActionListener {
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button confirmBtn;
     String nameOfTheTrainer;
     int selectedOptionIndex;
+    Handler uiHandler;
+
+    public static final String selectedOptionIndexKey = "selectedOptionIndex";
 
     static final String[] pokemonNames = {"小火龍", "傑尼龜", "妙蛙種子"};
 
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nameText.setOnEditorActionListener(this);
         nameText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         confirmBtn.setOnClickListener(this);
+
+        uiHandler = new Handler(getMainLooper());
+
 
 
     }
@@ -65,11 +73,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             infoText.setText(welcomeMessage);
 
+            //設定延遲切換畫面(Activity)
+            uiHandler.postDelayed(jumpToNewActivityTask,3*1000);
+
+
 
         }
-
-
     }
+
+
+
+
+
+
+
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -92,4 +109,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return false;
     }
+
+    Runnable jumpToNewActivityTask = new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = new Intent();
+            intent.putExtra(selectedOptionIndexKey,selectedOptionIndex);
+            intent.setClass(MainActivity.this, PokemonListActivity.class);
+            startActivity(intent);
+        }
+    };
+
 }

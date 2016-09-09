@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,24 +12,29 @@ import android.widget.TextView;
 import com.example.user.myapplication.model.OwnedPokemonInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by user on 2016/9/5.
  */
-public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
+public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implements OnPokemonSelectedChangedListener{
 
     int rowViewLayoutId;
     LayoutInflater mInflater;
+
+    ArrayList<OwnedPokemonInfo> selectedPokemonInfos = new ArrayList<>();
+
+    public OnPokemonSelectedChangedListener listener;
 
 
     public PokemonlistAdapter(Context context,int layoutId,List<OwnedPokemonInfo> objects){
         super(context, layoutId, objects);
         rowViewLayoutId = layoutId;
         mInflater = LayoutInflater.from(context);
+        ViewHolder.mAdapter = this;
+
+
     }
 
     @Override
@@ -52,6 +55,18 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
         viewHolder.setView(data);
 
         return rowView;
+    }
+
+    @Override
+    public void onSelectedChanged(OwnedPokemonInfo data) {
+        if(data.isSelected){
+            selectedPokemonInfos.add(data);
+        }else{
+            selectedPokemonInfos.remove(data);
+        }
+
+        listener.onSelectedChanged(data);
+
     }
 
     public static class ViewHolder implements View.OnClickListener{
@@ -76,11 +91,18 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
             mMaxHP = (TextView) rowView.findViewById(R.id.maxHP);
             mHPBar = (ProgressBar) rowView.findViewById(R.id.hpBar);
             mAppearanceImg.setOnClickListener(this);
+
+
+
         }
+
+
+
 
         //將mRowView連結data
         public void setView(OwnedPokemonInfo data){
             mData = data;
+            mRowView.setActivated(mData.isSelected);
             mNameText.setText(data.name);
             mLevelText.setText(String.valueOf(data.level));
             mCurrentHP.setText(String.valueOf(data.currentHP));
@@ -97,9 +119,9 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> {
 
 
         public void setSelected(){
-            mData.isSeleted = !mData.isSeleted;
-            mRowView.setActivated(mData.isSeleted);
-
+            mData.isSelected = !mData.isSelected;
+            mRowView.setActivated(mData.isSelected);
+            mAdapter.onSelectedChanged(mData);
 
         }
 
