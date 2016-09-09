@@ -27,19 +27,20 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp"
-            android:id="@+id/textView" />
+            android:id="@+id/infoText"
+            android:gravity="center|center_horizontal" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="姓名"
             android:ems="10"
             android:id="@+id/nameText"
             android:layout_marginTop="24dp"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:hint="請輸入姓名" />
+            android:layout_below="@+id/infoText"
+            android:hint="請輸入姓名"
+            android:layout_toLeftOf="@+id/infocheck"
+            android:layout_toStartOf="@+id/infocheck" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -49,28 +50,35 @@
             android:id="@+id/optionGroup"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="100dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option1"
-                android:drawableRight="@drawable/bulbasaur"
-                android:layout_weight="1" />
+                android:drawableRight="@drawable/charmander"
+                android:paddingLeft="-30dp"
+                android:paddingRight="-20dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option2"
-                android:drawableRight="@drawable/charmander"
-                android:layout_weight="1" />
+                android:drawableRight="@drawable/squirtle"
+                android:layout_gravity="left"
+                android:paddingLeft="-30dp"
+                android:paddingRight="-20dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option3"
-                android:drawableRight="@drawable/squirtle"
-                android:layout_weight="1" />
+                android:drawableRight="@drawable/bulbasaur"
+                android:paddingRight="-20dp"
+                android:paddingLeft="-30dp"
+                android:layout_gravity="left" />
         </RadioGroup>
 
         <CheckBox
@@ -79,8 +87,10 @@
             android:text="hide"
             android:id="@+id/infocheck"
             android:layout_alignBottom="@+id/nameText"
-            android:layout_alignRight="@+id/optionGroup"
-            android:layout_alignEnd="@+id/optionGroup" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="26dp"
+            android:layout_marginEnd="26dp" />
 
         <Button
             android:layout_width="wrap_content"

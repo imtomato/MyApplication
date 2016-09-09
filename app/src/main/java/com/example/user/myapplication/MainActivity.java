@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,TextView.OnEditorActionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,TextView.OnEditorActionListener{
 
 
     TextView infoText;
@@ -101,10 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //按下虛擬鍵盤確認等於使用者按按鈕
             confirmBtn.performClick();
 
-
-
-
-
         }
 
         return false;
@@ -119,5 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
     };
+
 
 }
