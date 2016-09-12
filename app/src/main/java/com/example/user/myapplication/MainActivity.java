@@ -114,6 +114,10 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
             intent.putExtra(selectedOptionIndexKey,selectedOptionIndex);
             intent.setClass(MainActivity.this, PokemonListActivity.class);
             startActivity(intent);
+
+            //Mainactivity 會進入destroy 階段
+            MainActivity.this.finish();
+
         }
     };
 

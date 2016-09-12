@@ -6,20 +6,20 @@ import android.util.Log;
 
 public class CustomizedActivity extends AppCompatActivity {
 
-    public String activityName ="";
+    public String activityName = "";
     public final static String debug_tag = "testStage";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(debug_tag,activityName+":onCreate");
+        Log.d(debug_tag, activityName + ":onCreate");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(debug_tag,activityName+":onStart");
+        Log.d(debug_tag, activityName + ":onStart");
     }
 
     @Override
@@ -48,5 +48,14 @@ public class CustomizedActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        if (isTaskRoot()) {
+            //如果是RootActivity 就讓行為變成按HomeButton行為一樣
+            //把APP收在背景跑
+            moveTaskToBack(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
