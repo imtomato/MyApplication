@@ -18,6 +18,8 @@ public class PokemonListActivity extends AppCompatActivity implements OnPokemonS
 
     PokemonlistAdapter arrayAdapter;
     public static final int detailActivityResultCode = 1;
+    public static final String ownedPokemonInfoKey = "parcelable";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +93,7 @@ public class PokemonListActivity extends AppCompatActivity implements OnPokemonS
         OwnedPokemonInfo data = arrayAdapter.getItem(position);
         Intent intent = new Intent();
         intent.setClass(PokemonListActivity.this,DetailActivity.class);
-        intent.putExtra("parcel",data);
+        intent.putExtra(ownedPokemonInfoKey,data);
         startActivityForResult(intent,detailActivityResultCode);
 
     }
