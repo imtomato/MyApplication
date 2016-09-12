@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by user on 2016/9/5.
  */
-public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implements OnPokemonSelectedChangedListener{
+public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implements OnPokemonSelectedChangedListener {
 
     int rowViewLayoutId;
     LayoutInflater mInflater;
@@ -28,7 +28,7 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
     public OnPokemonSelectedChangedListener listener;
 
 
-    public PokemonlistAdapter(Context context,int layoutId,List<OwnedPokemonInfo> objects){
+    public PokemonlistAdapter(Context context, int layoutId, List<OwnedPokemonInfo> objects) {
         super(context, layoutId, objects);
         rowViewLayoutId = layoutId;
         mInflater = LayoutInflater.from(context);
@@ -42,12 +42,12 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
         OwnedPokemonInfo data = getItem(position);
         ViewHolder viewHolder = null;
         //判斷rowView是否初始成功
-        if(rowView == null){
-            rowView = mInflater.inflate(rowViewLayoutId,null);
+        if (rowView == null) {
+            rowView = mInflater.inflate(rowViewLayoutId, null);
             viewHolder = new ViewHolder(rowView);
             //放到cache
             rowView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) rowView.getTag();
         }
 
@@ -59,9 +59,9 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
 
     @Override
     public void onSelectedChanged(OwnedPokemonInfo data) {
-        if(data.isSelected){
+        if (data.isSelected) {
             selectedPokemonInfos.add(data);
-        }else{
+        } else {
             selectedPokemonInfos.remove(data);
         }
 
@@ -69,7 +69,7 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
 
     }
 
-    public static class ViewHolder implements View.OnClickListener{
+    public static class ViewHolder implements View.OnClickListener {
         View mRowView;
 
         ImageView mAppearanceImg;
@@ -82,7 +82,8 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
         public static PokemonlistAdapter mAdapter;
 
         OwnedPokemonInfo mData;
-        public ViewHolder(View rowView){
+
+        public ViewHolder(View rowView) {
             mRowView = rowView;
             mAppearanceImg = (ImageView) rowView.findViewById(R.id.appearanceImg);
             mNameText = (TextView) rowView.findViewById(R.id.nameText);
@@ -93,32 +94,29 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
             mAppearanceImg.setOnClickListener(this);
 
 
-
         }
 
 
-
-
         //將mRowView連結data
-        public void setView(OwnedPokemonInfo data){
+        public void setView(OwnedPokemonInfo data) {
             mData = data;
             mRowView.setActivated(mData.isSelected);
             mNameText.setText(data.name);
             mLevelText.setText(String.valueOf(data.level));
             mCurrentHP.setText(String.valueOf(data.currentHP));
             mMaxHP.setText(String.valueOf(data.maxHP));
-            int HPProgress = (int) (((float)data.currentHP / data.maxHP) *100);
+            int HPProgress = (int) (((float) data.currentHP / data.maxHP) * 100);
             mHPBar.setProgress(HPProgress);
 
 
-            String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/listImg/%d.png",data.pokemonId);
-            ImageLoader.getInstance().displayImage(imgUrl,mAppearanceImg);
+            String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/listImg/%d.png", data.pokemonId);
+            ImageLoader.getInstance().displayImage(imgUrl, mAppearanceImg);
 
 
         }
 
 
-        public void setSelected(){
+        public void setSelected() {
             mData.isSelected = !mData.isSelected;
             mRowView.setActivated(mData.isSelected);
             mAdapter.onSelectedChanged(mData);
@@ -126,17 +124,47 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
         }
 
 
-
-
         //當神奇寶貝圖片被選取時，action_bar可操作
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
-            if(viewId == R.id.appearanceImg){
+            if (viewId == R.id.appearanceImg) {
                 setSelected();
             }
         }
     }
 
+    public OwnedPokemonInfo getItemWithNames(String name) {
+
+        for (int i = 0; i < getCount(); i++) {
+            OwnedPokemonInfo ownedPokemonInfo = getItem(i);
+            if (name.equals(ownedPokemonInfo.name)) {
+                return ownedPokemonInfo;
+            }
+        }
+        return null;
+    }
+
+
+    //升級
+    public void updateItem(OwnedPokemonInfo mData) {
+        for (int i = 0; i < getCount(); i++) {
+            OwnedPokemonInfo ownedPokemonInfo = getItem(i);
+            if (mData.name.equals(ownedPokemonInfo.name)) {
+                ownedPokemonInfo.level = mData.level;
+                ownedPokemonInfo.maxHP = mData.maxHP;
+                ownedPokemonInfo.type1Index = mData.type1Index;
+                ownedPokemonInfo.type2Index = mData.type2Index;
+                ownedPokemonInfo.pokemonId = mData.pokemonId;
+                break;
+
+            }else{
+                return;
+            }
+        }
+
+    }
+
 
 }
+

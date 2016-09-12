@@ -14,7 +14,7 @@ import com.example.user.myapplication.model.OwnedPokemonInfoDataManager;
 
 import java.util.ArrayList;
 
-public class PokemonListActivity extends AppCompatActivity implements OnPokemonSelectedChangedListener, AdapterView.OnItemClickListener {
+public class PokemonListActivity extends CustomizedActivity implements OnPokemonSelectedChangedListener, AdapterView.OnItemClickListener {
 
     PokemonlistAdapter arrayAdapter;
     public static final int detailActivityResultCode = 1;
@@ -22,6 +22,7 @@ public class PokemonListActivity extends AppCompatActivity implements OnPokemonS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activityName = this.getClass().getSimpleName();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_list);
 
@@ -95,6 +96,28 @@ public class PokemonListActivity extends AppCompatActivity implements OnPokemonS
         intent.setClass(PokemonListActivity.this,DetailActivity.class);
         intent.putExtra(ownedPokemonInfoKey,data);
         startActivityForResult(intent,detailActivityResultCode);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == detailActivityResultCode){
+            if(resultCode == DetailActivity.removeFromList){
+                OwnedPokemonInfo mData = arrayAdapter.getItemWithNames(data.getStringExtra(OwnedPokemonInfo.nameKey));
+                arrayAdapter.remove(mData);
+                return;
+            }else if(resultCode == DetailActivity.levelUp){
+
+
+
+
+            }
+        }
+
+
+
+
 
     }
 }

@@ -14,3 +14,9 @@ adjustViewBounds:
 2.	Build.gradle(Module: app)
 
 * ImageLoader
+
+9/12
+* ArrayAdapter ListView 資料改變
+1.若是ListView的實體資料改變，須呼叫notifyDataSetChanged讓ArrayAdapter知道資料改變
+若透過arrayAdapter操作則不需要呼叫，因arrayAdapter內部也會呼叫該function
+
