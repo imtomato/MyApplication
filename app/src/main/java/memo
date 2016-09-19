@@ -32,4 +32,4 @@ adjustViewBounds:
 2.fragment是將UI包裝成模組達到動態置換UI的效果
 3.應用場景:在同一個Activity下可顯示多個UI頁面，適合Navigation Drawer
 4.不會透過contructor產生fragment物件，會透過newInstance靜態涵式產生fragment物件
-
+5.Transaction可追蹤狀態

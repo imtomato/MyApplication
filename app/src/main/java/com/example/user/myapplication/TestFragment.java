@@ -33,10 +33,10 @@ public class TestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(debug_tag, mMessage + ":onCreate");
+
         Bundle params = this.getArguments();
         mMessage = params.getString(msgTextKey);
-
+        Log.d(debug_tag, mMessage + ":onCreate");
 
     }
 
@@ -54,8 +54,9 @@ public class TestFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        super.onAttach(context);
         Log.d(debug_tag, mMessage + ":onAttach");
+        super.onAttach(context);
+
     }
 
     @Override
@@ -73,7 +74,7 @@ public class TestFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(debug_tag, mMessage + ":onStResume");
+        Log.d(debug_tag, mMessage + ":onResume");
     }
 
     @Override

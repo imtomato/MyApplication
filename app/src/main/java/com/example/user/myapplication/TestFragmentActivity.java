@@ -38,6 +38,8 @@ public class TestFragmentActivity extends AppCompatActivity implements View.OnCl
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer,fragment);
+        //追蹤transaction
+        transaction.addToBackStack(null);
         transaction.commit();
 
     }
