@@ -86,12 +86,6 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
 
 
 
-
-
-
-
-
-
     }
 
     @Override
@@ -101,11 +95,20 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
         int viewId = v.getId();
 
         if (viewId == R.id.confirmButton) {
+            //將按鈕鎖住
+            v.setClickable(false);
             nameOfTheTrainer = nameText.getText().toString();
 
             int selectedRadioButtonViewId = optionsGrp.getCheckedRadioButtonId(); //找出被選的radioButtonID
             View selectedRadioButton = optionsGrp.findViewById(selectedRadioButtonViewId); //透過ID找到radioButtonView
             selectedOptionIndex = optionsGrp.indexOfChild(selectedRadioButton); //找出被選的radioButton在第幾個位置
+
+            //將資訊放入sharedpreference
+            SharedPreferences preferences = getSharedPreferences(Application.class.getSimpleName(),MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(nameOfTheTrainerKey,nameOfTheTrainer);
+            editor.putInt(selectedIndexKey, selectedOptionIndex);
+            editor.commit();
 
             String welcomeMessage = String.format
                     ("你好，訓練家%s !歡迎來到神奇寶貝的世界，你的第一個夥伴是%s "
@@ -123,11 +126,11 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
     }
 
 
-
-
-
-
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        confirmBtn.setClickable(true);
+    }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
