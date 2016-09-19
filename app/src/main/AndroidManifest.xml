@@ -17,17 +17,19 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".PokemonListActivity" />
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".CustomizedActivity" />
+        <activity android:name=".TestFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PokemonListActivity" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".CustomizedActivity" />
-        <activity android:name=".TestFragmentActivity"></activity>
     </application>
 
 </manifest>
