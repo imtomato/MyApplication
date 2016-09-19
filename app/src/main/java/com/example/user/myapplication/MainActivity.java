@@ -12,10 +12,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
 
 
 public class MainActivity extends CustomizedActivity implements View.OnClickListener,TextView.OnEditorActionListener{
@@ -28,6 +31,7 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
     String nameOfTheTrainer;
     int selectedOptionIndex;
     Handler uiHandler;
+    ProgressBar progressBar ;
 
     public static final String selectedOptionIndexKey = "selectedOptionIndex";
 
@@ -54,6 +58,14 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
         confirmBtn.setOnClickListener(this);
 
         uiHandler = new Handler(getMainLooper());
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setIndeterminateDrawable(new CircularProgressDrawable.Builder(this)
+                .colors(getResources()
+                        .getIntArray(R.array.gplus_colors))
+                .sweepSpeed(1f)
+                .strokeWidth(8f)
+                .build());
+
 
         //從sharedPrefrence取得資訊
         SharedPreferences preferences = getSharedPreferences(Application.class.getSimpleName(),MODE_PRIVATE);
@@ -61,11 +73,15 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
         selectedOptionIndex = preferences.getInt(selectedIndexKey,0);
         //判斷是否為第一次開啟APP
         if(nameOfTheTrainer == null){
-            //TODO:show confirm button, nameEditText and optionGroup
-
+            confirmBtn.setVisibility(View.VISIBLE);
+            optionsGrp.setVisibility(View.VISIBLE);
+            nameText.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
         }else{
-            //TODO: show progressBar
-
+            confirmBtn.setVisibility(View.INVISIBLE);
+            optionsGrp.setVisibility(View.INVISIBLE);
+            nameText.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
         }
 
 
