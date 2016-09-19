@@ -23,6 +23,13 @@ adjustViewBounds:
 
 
 9/19
-*SharePreference
+* SharePreference
 1.透過button被觸發時存資料到share preference內
+* AlertDialog
+1.setXXXXButton()參數放null就是按鈕不做任何邏輯，結束對話框
+* Fragment
+1.fragment跟Activity一樣是對應一個layout
+2.fragment是將UI包裝成模組達到動態置換UI的效果
+3.應用場景:在同一個Activity下可顯示多個UI頁面，適合Navigation Drawer
+4.不會透過contructor產生fragment物件，會透過newInstance靜態涵式產生fragment物件
 

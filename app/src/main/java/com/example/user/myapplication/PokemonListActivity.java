@@ -1,27 +1,37 @@
 package com.example.user.myapplication;
 
+
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.user.myapplication.model.OwnedPokemonInfo;
 import com.example.user.myapplication.model.OwnedPokemonInfoDataManager;
 
 import java.util.ArrayList;
 
-public class PokemonListActivity extends CustomizedActivity implements OnPokemonSelectedChangedListener, AdapterView.OnItemClickListener {
+public class PokemonListActivity extends CustomizedActivity implements OnPokemonSelectedChangedListener
+        , AdapterView.OnItemClickListener, DialogInterface.OnClickListener{
 
     PokemonlistAdapter arrayAdapter;
+    AlertDialog deleteDialertDialog;
     public static final int detailActivityResultCode = 1;
     public static final String ownedPokemonInfoKey = "parcelable";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         activityName = this.getClass().getSimpleName();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_list);
@@ -40,11 +50,6 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
 
         ownedPokemonInfos.add(0,selectedPokemonInfo);
 
-//        ArrayList<String> pokemonNames = new ArrayList<>();
-//        for(OwnedPokemonInfo ownedPokemonInfo : ownedPokemonInfos){
-//            pokemonNames.add(ownedPokemonInfo.name);
-//        }
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,pokemonNames);
 
 
         arrayAdapter = new PokemonlistAdapter(this, R.layout.row_view_of_pokemon_list, ownedPokemonInfos);
@@ -53,8 +58,18 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(this);
 
+        //initial alertdialog
+        deleteDialertDialog = new AlertDialog
+                .Builder(this).setTitle("警告!")
+                .setMessage("你確定要丟棄這些神奇寶貝嗎?")
+                .setPositiveButton("確認",this)
+                .setNegativeButton("取消",this)
+                .create();
+
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,15 +81,20 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
         }
     }
 
+
+    public void deleteSelcetedPokemon(){
+        for(OwnedPokemonInfo ownedPokemonInfo : arrayAdapter.selectedPokemonInfos){
+            arrayAdapter.remove(ownedPokemonInfo);
+        }
+        arrayAdapter.selectedPokemonInfos.clear();
+        invalidateOptionsMenu();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_delete) {
-            for(OwnedPokemonInfo ownedPokemonInfo : arrayAdapter.selectedPokemonInfos){
-                arrayAdapter.remove(ownedPokemonInfo);
-            }
-            arrayAdapter.selectedPokemonInfos.clear();
-            invalidateOptionsMenu();
+            deleteDialertDialog.show();
             return true;
         } else if (itemId == R.id.action_setting) {
             return true;
@@ -110,14 +130,24 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
             }else if(resultCode == DetailActivity.levelUp){
 
 
-
-
             }
         }
+    }
+
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if(dialog.equals(deleteDialertDialog)) {
+           if(which == AlertDialog.BUTTON_POSITIVE){
+               deleteSelcetedPokemon();
+           }else if(which == AlertDialog.BUTTON_NEGATIVE){
+               Toast.makeText(this,"取消丟棄",Toast.LENGTH_SHORT)
+                       .show();
+           }
 
 
 
 
-
+        }
     }
 }

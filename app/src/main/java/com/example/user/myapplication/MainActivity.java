@@ -111,7 +111,7 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
                 editor.putString(nameOfTheTrainerKey, nameOfTheTrainer);
                 editor.putInt(selectedIndexKey, selectedOptionIndex);
                 editor.commit();
-            } else {
+            }
 
 
                 String welcomeMessage = String.format
@@ -125,7 +125,7 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
                 //設定延遲切換畫面(Activity)
                 uiHandler.postDelayed(jumpToNewActivityTask, 3 * 1000);
 
-            }
+
 
         }
     }

@@ -24,9 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".PokemonListActivity" />
-        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".Main2Activity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".CustomizedActivity"></activity>
+        <activity android:name=".CustomizedActivity" />
+        <activity android:name=".TestFragmentActivity"></activity>
     </application>
 
 </manifest>
