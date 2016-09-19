@@ -22,3 +22,7 @@ adjustViewBounds:
 2.BackButton 行為是destroy Activity
 
 
+9/19
+*SharePreference
+1.透過button被觸發時存資料到share preference內
+

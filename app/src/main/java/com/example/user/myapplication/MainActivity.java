@@ -1,7 +1,9 @@
 package com.example.user.myapplication;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,9 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
 
     public static final String selectedOptionIndexKey = "selectedOptionIndex";
 
+    public static final String nameOfTheTrainerKey = "nameOfTheTrainer";
+    public static final String selectedIndexKey = "selectedIndex";
+
     static final String[] pokemonNames = {"小火龍", "傑尼龜", "妙蛙種子"};
 
 
@@ -49,6 +54,25 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
         confirmBtn.setOnClickListener(this);
 
         uiHandler = new Handler(getMainLooper());
+
+        //從sharedPrefrence取得資訊
+        SharedPreferences preferences = getSharedPreferences(Application.class.getSimpleName(),MODE_PRIVATE);
+        nameOfTheTrainer = preferences.getString(nameOfTheTrainerKey,null);
+        selectedOptionIndex = preferences.getInt(selectedIndexKey,0);
+        //判斷是否為第一次開啟APP
+        if(nameOfTheTrainer == null){
+            //TODO:show confirm button, nameEditText and optionGroup
+
+        }else{
+            //TODO: show progressBar
+
+        }
+
+
+
+
+
+
 
 
 
