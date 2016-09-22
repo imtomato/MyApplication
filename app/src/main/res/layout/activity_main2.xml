@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option1"
-                android:drawableRight="@drawable/bulbasaur"
+                android:drawableRight="@drawable/ulbasaur"
                 android:paddingLeft="-30dp"
                 android:paddingRight="-20dp" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option2"
-                android:drawableRight="@drawable/squirtle"
+                android:drawableRight="@drawable/quirtle"
                 android:layout_gravity="left"
                 android:paddingLeft="-30dp"
                 android:paddingRight="-20dp" />
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/option3"
-                android:drawableRight="@drawable/charmander"
+                android:drawableRight="@drawable/harmander"
                 android:paddingRight="-20dp"
                 android:paddingLeft="-30dp"
                 android:layout_gravity="left" />

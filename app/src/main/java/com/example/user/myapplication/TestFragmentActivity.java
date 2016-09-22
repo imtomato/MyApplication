@@ -1,7 +1,6 @@
 package com.example.user.myapplication;
 
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +13,7 @@ public class TestFragmentActivity extends AppCompatActivity implements View.OnCl
 
 
     Fragment[] fragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,15 @@ public class TestFragmentActivity extends AppCompatActivity implements View.OnCl
         fragment = new Fragment[2];
         fragment[0] = TestFragment.newInstance("Fragment1");
         fragment[1] = TestFragment.newInstance("Fragment2");
+        fragmentManager = getSupportFragmentManager();
 
     }
 
 
-    public void displayFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    public void displayFragment(Fragment fragment) {
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentContainer,fragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         //追蹤transaction
         transaction.addToBackStack(null);
         transaction.commit();
@@ -45,13 +46,21 @@ public class TestFragmentActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.fragmentBtn1){
+        if (v.getId() == R.id.fragmentBtn1) {
             displayFragment(fragment[0]);
-        }else if(v.getId() == R.id.fragmentBtn2){
+        } else if (v.getId() == R.id.fragmentBtn2) {
             displayFragment(fragment[1]);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
         }
 
 
