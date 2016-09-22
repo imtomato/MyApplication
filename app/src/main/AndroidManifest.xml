@@ -16,9 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".PokemonListActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".DetailActivity" />
@@ -29,6 +27,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".DrawerActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar">
         </activity>
     </application>
 
