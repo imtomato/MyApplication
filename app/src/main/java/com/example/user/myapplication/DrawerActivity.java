@@ -20,7 +20,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 
-public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener {
+public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener,FragmentManager.OnBackStackChangedListener{
 
     AccountHeader headerResult;
     IProfile profile;
@@ -40,6 +40,8 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
         fragments[2] = TestFragment.newInstance("fake 2");
 
         fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -122,4 +124,15 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
         }
     }
 
+    @Override
+    public void onBackStackChanged() {
+        for(int i=0; i< fragments.length ;i++){
+            if(fragments[i].isVisible()){
+                naviDrawer.setSelectionAtPosition(i + 1, false);
+            }
+        }
+
+
+        
+    }
 }
