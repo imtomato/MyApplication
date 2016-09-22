@@ -20,7 +20,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 
-public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener{
+public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener {
 
     AccountHeader headerResult;
     IProfile profile;
@@ -45,13 +45,12 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
         setSupportActionBar(toolbar);
 
 
-
         String profileName = "batman";
         String profileEmail = "batman@gmail.com";
-        Drawable profileIcon = Utils.getDrawable(this,R.drawable.profile3);
+        Drawable profileIcon = Utils.getDrawable(this, R.drawable.profile3);
         profile = new ProfileDrawerItem().withEmail(profileEmail).withName(profileName).withIcon(profileIcon);
 
-        buildDrawerHeader(true,savedInstanceState);
+        buildDrawerHeader(true, savedInstanceState);
         naviDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -61,31 +60,32 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
                 .withSavedInstance(savedInstanceState)
                 .build();
 
-        //設定預設選第一個Item,並觸發ClickListener
-        naviDrawer.setSelectionAtPosition(defaultSelectedIndex+1,true);
-
-
+        //設定預設選第一個Item,不觸發ClickListener
+        naviDrawer.setSelectionAtPosition(defaultSelectedIndex + 1, false);
+        displayFragment(false,fragments[0]);
 
 
     }
 
 
-    public void displayFragment(Fragment fragment) {
+    public void displayFragment(Boolean toAdd, Fragment fragment) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         //追蹤transaction
-        transaction.addToBackStack(null);
+        if (toAdd) {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
 
     }
 
 
-    void buildDrawerHeader(boolean compact,Bundle savedInstatnce){
+    void buildDrawerHeader(boolean compact, Bundle savedInstatnce) {
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(Utils.getDrawable(this,R.drawable.header))
+                .withHeaderBackground(Utils.getDrawable(this, R.drawable.header))
                 .withCompactStyle(compact)
                 .addProfiles(profile)
                 .withSavedInstance(savedInstatnce)
@@ -107,7 +107,19 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-        displayFragment(fragments[position - 1]);
+        displayFragment(true,fragments[position - 1]);
         return false; //Navigation Bar 點擊Item後會縮回
     }
+
+    @Override
+    public void onBackPressed() {
+        if (naviDrawer != null && naviDrawer.isDrawerOpen()) {
+            naviDrawer.closeDrawer();
+        } else if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }
