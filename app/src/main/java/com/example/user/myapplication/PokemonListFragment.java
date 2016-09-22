@@ -84,6 +84,11 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
                     .setNegativeButton("取消", this)
                     .create();
 
+            //呼叫CreateOptionMenu
+            setHasOptionsMenu(true);
+            //確保Menu有顯示
+            setMenuVisibility(true);
+
         }
         return fragmentView;
     }
