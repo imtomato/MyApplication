@@ -128,9 +128,12 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
                 arrayAdapter.remove(mData);
                 return;
             }else if(resultCode == DetailActivity.levelUp){
-
-
+                OwnedPokemonInfo mData = arrayAdapter.getItemWithNames(data.getStringExtra(OwnedPokemonInfo.nameKey));
+                mData.level = mData.level+1;
+                arrayAdapter.updateItem(mData);
+                arrayAdapter.notifyDataSetChanged();
             }
+
         }
     }
 
@@ -144,10 +147,6 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
                Toast.makeText(this,"取消丟棄",Toast.LENGTH_SHORT)
                        .show();
            }
-
-
-
-
         }
     }
 }

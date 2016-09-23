@@ -3,8 +3,6 @@ package com.example.user.myapplication;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -113,8 +111,11 @@ public class DetailActivity extends CustomizedActivity {
             Log.d("testFinish","here");
             return true;
         }else if(itemId == R.id.action_level_up){
-            //
-
+            Intent returnIntent = new Intent();
+            ownedPokemonInfo.level++;
+            setView(ownedPokemonInfo);
+            returnIntent.putExtra(OwnedPokemonInfo.nameKey, ownedPokemonInfo.name);
+            setResult(levelUp,returnIntent);
             return true;
         }
 
