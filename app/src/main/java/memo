@@ -38,3 +38,5 @@ adjustViewBounds:
 *Parse
 1.物件轉換成Parse class，需要繼承ParseObject及標示Annotation
 2.在initialize Parse 之前須註冊該Class
+*BrocastReceiver
+1.onResume註冊 onPause註銷
