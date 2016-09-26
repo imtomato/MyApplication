@@ -33,3 +33,8 @@ adjustViewBounds:
 3.應用場景:在同一個Activity下可顯示多個UI頁面，適合Navigation Drawer
 4.不會透過contructor產生fragment物件，會透過newInstance靜態涵式產生fragment物件
 5.Transaction可追蹤狀態
+
+9/26
+*Parse
+1.物件轉換成Parse class，需要繼承ParseObject及標示Annotation
+2.在initialize Parse 之前須註冊該Class

@@ -2,11 +2,13 @@ package com.example.user.myapplication;
 
 import android.app.Application;
 
+import com.example.user.myapplication.model.OwnedPokemonInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
 import com.parse.Parse.Configuration;
+import com.parse.ParseObject;
 
 
 /**
@@ -33,6 +35,10 @@ public class MyApplication extends Application {
                 .build();
 
         ImageLoader.getInstance().init(config);
+
+
+        //register Class
+        ParseObject.registerSubclass(OwnedPokemonInfo.class);
 
         //initialize Parse
         Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())

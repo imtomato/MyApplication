@@ -8,9 +8,6 @@
     <!-- Include following permission if you want to cache images on SD card -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -20,23 +17,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".PokemonListActivity" />
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".CustomizedActivity" />
+        <activity android:name=".TestFragmentActivity"></activity>
+        <activity
+            android:name=".DrawerActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar">
+
+        </activity>
+        <activity android:name=".TestThreadctivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".PokemonListActivity" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".CustomizedActivity" />
-        <activity android:name=".TestFragmentActivity">
-
-        </activity>
-        <activity android:name=".DrawerActivity"
-            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar">
-
         </activity>
     </application>
 

@@ -1,7 +1,9 @@
 package com.example.user.myapplication;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,15 +20,20 @@ import android.widget.Toast;
 
 import com.example.user.myapplication.model.OwnedPokemonInfo;
 import com.example.user.myapplication.model.OwnedPokemonInfoDataManager;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 2016/9/22.
  */
 public class PokemonListFragment extends Fragment implements OnPokemonSelectedChangedListener
-        , AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
+        , AdapterView.OnItemClickListener, DialogInterface.OnClickListener, FindCallback<OwnedPokemonInfo>{
 
+
+    public final static String recordIsInDBKey = "recordIsInDB";
     public static final int detailActivityResultCode = 1;
     public static final String ownedPokemonInfoKey = "parcelable";
     PokemonlistAdapter arrayAdapter;
@@ -48,6 +55,13 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ownedPokemonInfos = new ArrayList<>();
+        prepareListViewData();
+
+
+    }
+
+    public void loadFromCSV(){
         Intent srcIntent = getActivity().getIntent();
         int selectedPokemonIndex = srcIntent.getIntExtra(MainActivity.selectedOptionIndexKey, 0);
 
@@ -55,15 +69,61 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
         OwnedPokemonInfoDataManager dataManager = new OwnedPokemonInfoDataManager(getActivity());
         dataManager.loadListViewData();
 
-        ownedPokemonInfos = dataManager.getOwnedPokemonInfos();
+        ArrayList<OwnedPokemonInfo> temp = dataManager.getOwnedPokemonInfos();
+        for(OwnedPokemonInfo ownedPokemonInfo : temp) {
+            ownedPokemonInfos.add(ownedPokemonInfo);
+        }
+
+
         ArrayList<OwnedPokemonInfo> initPokemonInfos = dataManager.getInitPokemonInfos();
 
         OwnedPokemonInfo selectedPokemonInfo = initPokemonInfos.get(selectedPokemonIndex);
 
         ownedPokemonInfos.add(0, selectedPokemonInfo);
+    }
+
+
+
+
+    public void prepareListViewData(){
+
+        SharedPreferences preferences = getActivity()
+                .getSharedPreferences(PokemonListFragment.class.getSimpleName(), Context.MODE_PRIVATE);
+
+        boolean recordInDB = preferences.getBoolean(recordIsInDBKey, false);
+        if(!recordInDB){ // init DB
+            loadFromCSV();
+            OwnedPokemonInfo.initTable(ownedPokemonInfos);
+            preferences.edit().putBoolean(recordIsInDBKey,true).commit();
+        }else{ //read from DB
+            OwnedPokemonInfo.getQuery().fromPin(OwnedPokemonInfo.localDBTableName) //read from localDB
+                    .findInBackground(this);
+
+            OwnedPokemonInfo.getQuery().findInBackground(this); //default read data from cloud DB
+
+
+        }
+
+
 
 
     }
+
+
+    @Override
+    public void done(List<OwnedPokemonInfo> objects, ParseException e) {
+        if(e == null){
+            ownedPokemonInfos.clear();
+            ownedPokemonInfos.addAll(objects);
+            if(arrayAdapter != null){
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+
+    }
+
 
     @Nullable
     @Override
@@ -102,7 +162,7 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
 
     public void deleteSelcetedPokemon(){
         for(OwnedPokemonInfo ownedPokemonInfo : arrayAdapter.selectedPokemonInfos){
-            arrayAdapter.remove(ownedPokemonInfo);
+            removePokemonInfo(ownedPokemonInfo);
         }
         arrayAdapter.selectedPokemonInfos.clear();
         getActivity().invalidateOptionsMenu();
@@ -133,7 +193,7 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
         Intent intent = new Intent();
         intent.setClass(getActivity(),DetailActivity.class);
         intent.putExtra(ownedPokemonInfoKey,data);
-        startActivityForResult(intent,detailActivityResultCode);
+        startActivityForResult(intent, detailActivityResultCode);
 
     }
 
@@ -143,7 +203,7 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
         if(requestCode == detailActivityResultCode){
             if(resultCode == DetailActivity.removeFromList){
                 OwnedPokemonInfo mData = arrayAdapter.getItemWithNames(data.getStringExtra(OwnedPokemonInfo.nameKey));
-                arrayAdapter.remove(mData);
+               removePokemonInfo(mData);
                 return;
             }else if(resultCode == DetailActivity.levelUp){
 
@@ -163,9 +223,38 @@ public class PokemonListFragment extends Fragment implements OnPokemonSelectedCh
                         .show();
             }
 
+        }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        OwnedPokemonInfo.saveToDB(ownedPokemonInfos);
+
+    }
+
+
+    public void removePokemonInfo(OwnedPokemonInfo ownedPokemonInfo){
+        if(arrayAdapter != null){
+            arrayAdapter.remove(ownedPokemonInfo);
+
+            //remove from DB
+            ownedPokemonInfo.unpinInBackground(OwnedPokemonInfo.localDBTableName);
+            //remove from cloud DB
+            ownedPokemonInfo.deleteEventually();
 
 
         }
+
+
     }
+
+
+
+
+
+
+
+
+
 }
