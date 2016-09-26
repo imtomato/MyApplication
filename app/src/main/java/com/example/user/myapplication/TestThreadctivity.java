@@ -1,11 +1,18 @@
 package com.example.user.myapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.example.user.myapplication.utility.Utils;
 
 import java.util.Calendar;
 import java.util.TimerTask;
@@ -40,7 +47,7 @@ public class TestThreadctivity extends AppCompatActivity {
     Runnable checkThreadIdTask = new Runnable() {
         @Override
         public void run() {
-            Log.d("threadTest","thread id:"+Thread.currentThread().getId()+"");
+            Log.d("threadTest", "thread id:" + Thread.currentThread().getId() + "");
         }
     };
 
@@ -52,11 +59,39 @@ public class TestThreadctivity extends AppCompatActivity {
             String timeInfo = Calendar.getInstance().getTime().toString();
             timeInfoText.setText(timeInfo);
 
-            uiHandler.postDelayed(this,updateTimePeriodSecs*1000);
+            uiHandler.postDelayed(this, updateTimePeriodSecs * 1000);
 
 
         }
     };
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wifiEventReceiver,intentFilter);
+
+    }
+
+
+    BroadcastReceiver wifiEventReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                String statusMsg = Utils.getConnectivityStatusString(context);
+                Log.d("wifiEvent",statusMsg);
+
+        }
+    };
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(wifiEventReceiver);
+
+
+    }
 }
