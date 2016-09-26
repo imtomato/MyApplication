@@ -101,15 +101,15 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
         public void setView(OwnedPokemonInfo data) {
             mData = data;
             mRowView.setActivated(mData.isSelected);
-            mNameText.setText(data.name);
-            mLevelText.setText(String.valueOf(data.level));
-            mCurrentHP.setText(String.valueOf(data.currentHP));
-            mMaxHP.setText(String.valueOf(data.maxHP));
-            int HPProgress = (int) (((float) data.currentHP / data.maxHP) * 100);
+            mNameText.setText(data.getName());
+            mLevelText.setText(String.valueOf(data.getLevel()));
+            mCurrentHP.setText(String.valueOf(data.getCurrentHP()));
+            mMaxHP.setText(String.valueOf(data.getMaxHP()));
+            int HPProgress = (int) (((float) data.getCurrentHP() / data.getMaxHP()) * 100);
             mHPBar.setProgress(HPProgress);
 
 
-            String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/listImg/%d.png", data.pokemonId);
+            String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/listImg/%d.png", data.getPokemonId());
             ImageLoader.getInstance().displayImage(imgUrl, mAppearanceImg);
 
 
@@ -138,7 +138,7 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
 
         for (int i = 0; i < getCount(); i++) {
             OwnedPokemonInfo ownedPokemonInfo = getItem(i);
-            if (name.equals(ownedPokemonInfo.name)) {
+            if (name.equals(ownedPokemonInfo.getName())) {
                 return ownedPokemonInfo;
             }
         }
@@ -150,12 +150,12 @@ public class PokemonlistAdapter extends ArrayAdapter<OwnedPokemonInfo> implement
     public void updateItem(OwnedPokemonInfo mData) {
         for (int i = 0; i < getCount(); i++) {
             OwnedPokemonInfo ownedPokemonInfo = getItem(i);
-            if (mData.name.equals(ownedPokemonInfo.name)) {
-                ownedPokemonInfo.level = mData.level;
-                ownedPokemonInfo.maxHP = mData.maxHP;
-                ownedPokemonInfo.type1Index = mData.type1Index;
-                ownedPokemonInfo.type2Index = mData.type2Index;
-                ownedPokemonInfo.pokemonId = mData.pokemonId;
+            if (mData.getName().equals(ownedPokemonInfo.getName())) {
+                ownedPokemonInfo.setLevel(mData.getLevel());
+                ownedPokemonInfo.setMaxHP(mData.getMaxHP());
+                ownedPokemonInfo.setType1Index(mData.getType1Index());
+                ownedPokemonInfo.setType2Index(mData.getType2Index());
+                ownedPokemonInfo.setPokemonId(mData.getPokemonId());
                 break;
 
             }else{

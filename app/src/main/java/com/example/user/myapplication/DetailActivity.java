@@ -58,36 +58,36 @@ public class DetailActivity extends CustomizedActivity {
         }
 
         ProgressBar hpBar = (ProgressBar) findViewById(R.id.HP_progressBar);
-        String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/detailImg/%d.png", data.pokemonId);
+        String imgUrl = String.format("http://www.csie.ntu.edu.tw/~r03944003/detailImg/%d.png", data.getPokemonId());
         ImageLoader.getInstance().displayImage(imgUrl, detailImg);
 
-        nameText.setText(data.name);
-        levelText.setText(String.valueOf(data.level));
-        currentHP.setText(String.valueOf(data.currentHP));
-        maxHP.setText(String.valueOf(data.maxHP));
+        nameText.setText(data.getName());
+        levelText.setText(String.valueOf(data.getLevel()));
+        currentHP.setText(String.valueOf(data.getCurrentHP()));
+        maxHP.setText(String.valueOf(data.getMaxHP()));
 
-        if (data.type1Index != -1) {
-            type1Text.setText(OwnedPokemonInfo.typeNames[data.type1Index]);
+        if (data.getType1Index() != -1) {
+            type1Text.setText(OwnedPokemonInfo.typeNames[data.getType1Index()]);
         } else {
             type1Text.setText("");
         }
 
-        if (data.type2Index != -1) {
-            type2Text.setText(OwnedPokemonInfo.typeNames[data.type2Index]);
+        if (data.getType2Index() != -1) {
+            type2Text.setText(OwnedPokemonInfo.typeNames[data.getType2Index()]);
         } else {
             type2Text.setText("");
         }
 
 
-        for (int i = 0; i < data.skills.length; i++) {
-            if (data.skills[i] != null) {
-                skillsText[i].setText(data.skills[i]);
+        for (int i = 0; i < data.getSkills().length; i++) {
+            if (data.getSkills()[i] != null) {
+                skillsText[i].setText(data.getSkills()[i]);
             } else {
                 skillsText[i].setText("");
             }
         }
 
-        int hpPercenttage = (int) ((data.currentHP / (float) data.maxHP) * 100);
+        int hpPercenttage = (int) ((data.getCurrentHP() / (float) data.getMaxHP()) * 100);
         hpBar.setProgress(hpPercenttage);
 
 
@@ -105,16 +105,16 @@ public class DetailActivity extends CustomizedActivity {
         int itemId = item.getItemId();
         if(itemId == R.id.action_save){
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(OwnedPokemonInfo.nameKey,ownedPokemonInfo.name);
+            returnIntent.putExtra(OwnedPokemonInfo.nameKey, ownedPokemonInfo.getName());
             setResult(removeFromList, returnIntent);
             finish();
             Log.d("testFinish","here");
             return true;
         }else if(itemId == R.id.action_level_up){
             Intent returnIntent = new Intent();
-            ownedPokemonInfo.level++;
+            ownedPokemonInfo.setLevel(ownedPokemonInfo.getLevel() + 1);
             setView(ownedPokemonInfo);
-            returnIntent.putExtra(OwnedPokemonInfo.nameKey, ownedPokemonInfo.name);
+            returnIntent.putExtra(OwnedPokemonInfo.nameKey, ownedPokemonInfo.getName());
             setResult(levelUp,returnIntent);
             return true;
         }

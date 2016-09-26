@@ -36,6 +36,7 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
 
-
+//Parse
+    compile 'com.parse:parse-android:1.13.1'
 
 }

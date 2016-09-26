@@ -5,6 +5,9 @@ import android.app.Application;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.parse.Parse;
+import com.parse.Parse.Configuration;
+
 
 /**
  * Created by user on 2016/9/5.
@@ -31,7 +34,13 @@ public class MyApplication extends Application {
 
         ImageLoader.getInstance().init(config);
 
-
+        //initialize Parse
+        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+                .enableLocalDataStore()
+                .applicationId("ra4EARRjY0Ac9hJ3xfrg4XeFKsLzwSQ7NJOLZWLr")
+                .server("https://parseapi.back4app.com/")
+                .clientKey("npW4YLkrOJwQoJPbpkBHKD3uw9C8gZkDd26pbPC1")
+                .build());
 
 
     }

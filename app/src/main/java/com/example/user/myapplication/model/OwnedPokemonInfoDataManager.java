@@ -75,20 +75,20 @@ public class OwnedPokemonInfoDataManager {
 
     OwnedPokemonInfo constructPokemonInfo(String[] dataFields){
         OwnedPokemonInfo ownedPokemonInfo = new OwnedPokemonInfo();
-        ownedPokemonInfo.pokemonId = Integer.valueOf(dataFields[0]);
-        ownedPokemonInfo.name = dataFields[2];
-        ownedPokemonInfo.level = Integer.valueOf(dataFields[3]);
-        ownedPokemonInfo.currentHP = Integer.valueOf(dataFields[4]);
-        ownedPokemonInfo.maxHP = Integer.valueOf(dataFields[5]);
-        ownedPokemonInfo.type1Index = Integer.valueOf(dataFields[6]);
-        ownedPokemonInfo.type2Index = Integer.valueOf(dataFields[7]);
+        ownedPokemonInfo.setPokemonId(Integer.valueOf(dataFields[0]));
+        ownedPokemonInfo.setName(dataFields[2]);
+        ownedPokemonInfo.setLevel(Integer.valueOf(dataFields[3]));
+        ownedPokemonInfo.setCurrentHP(Integer.valueOf(dataFields[4]));
+        ownedPokemonInfo.setMaxHP(Integer.valueOf(dataFields[5]));
+        ownedPokemonInfo.setType1Index(Integer.valueOf(dataFields[6]));
+        ownedPokemonInfo.setType2Index(Integer.valueOf(dataFields[7]));
         String [] skills = new String[OwnedPokemonInfo.maxNumSkills];
 
         for(int i = 8;i<dataFields.length;i++){
             skills[i-8] = dataFields[i];
         }
 
-        ownedPokemonInfo.skills = skills;
+        ownedPokemonInfo.setSkills(skills);
 
         return ownedPokemonInfo;
 

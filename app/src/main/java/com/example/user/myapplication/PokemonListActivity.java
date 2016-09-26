@@ -129,7 +129,7 @@ public class PokemonListActivity extends CustomizedActivity implements OnPokemon
                 return;
             }else if(resultCode == DetailActivity.levelUp){
                 OwnedPokemonInfo mData = arrayAdapter.getItemWithNames(data.getStringExtra(OwnedPokemonInfo.nameKey));
-                mData.level = mData.level+1;
+                mData.setLevel(mData.getLevel() +1);
                 arrayAdapter.updateItem(mData);
                 arrayAdapter.notifyDataSetChanged();
             }
