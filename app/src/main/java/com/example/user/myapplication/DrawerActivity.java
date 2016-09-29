@@ -37,7 +37,7 @@ public class DrawerActivity extends AppCompatActivity implements Drawer.OnDrawer
         fragments = new Fragment[3];
         fragments[0] = PokemonListFragment.newInstance();
         fragments[1] = TestFragment.newInstance("fake 1");
-        fragments[2] = TestFragment.newInstance("fake 2");
+        fragments[2] = PokemonMapFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
