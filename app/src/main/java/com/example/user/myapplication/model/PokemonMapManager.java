@@ -1,10 +1,8 @@
 package com.example.user.myapplication.model;
 
 import android.os.AsyncTask;
-
-import com.example.user.myapplication.PokemonMapFragment;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
+import android.util.Log;
+import com.example.user.myapplication.utility.Utils;
 import com.google.android.gms.maps.GoogleMap;
 
 /**
@@ -22,8 +20,7 @@ public class PokemonMapManager {
 
     public void requestPokemonServer(){
 
-
-
+        (new requestTask()).execute("http://140.112.30.42:5001/raw_data");
 
     }
 
@@ -34,9 +31,11 @@ public class PokemonMapManager {
         //connect to internet
         @Override
         protected String doInBackground(String... params) {
-
-
-            return null;
+            byte[] bytes = Utils.urlToBytes(params[0]);
+            if(bytes == null){
+                return null;
+            }
+            return new String(bytes);
         }
 
 
@@ -44,9 +43,7 @@ public class PokemonMapManager {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-
-
+            Log.d("Pokemon Data:",s); //Stirng s 參數 就是 doInBackgroud做完的值
         }
     };
 

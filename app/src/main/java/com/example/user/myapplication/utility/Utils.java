@@ -8,6 +8,13 @@ import android.os.Build;
 
 import com.example.user.myapplication.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  * Created by user on 2016/9/22.
  */
@@ -58,5 +65,24 @@ public class Utils {
     }
 
 
-
+    public static byte[] urlToBytes(String urlString){
+        try {
+            URL url = new URL(urlString);
+            URLConnection urlConnection = url.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] bytes = new byte[1024];
+            int len = 0;
+            while((len = inputStream.read(bytes)) != -1){
+                byteArrayOutputStream.write(bytes,0,len);
+            }
+            inputStream.close();
+            return byteArrayOutputStream.toByteArray();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

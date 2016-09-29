@@ -96,6 +96,9 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
             return;
         }
 
+        pokemonMapManager.requestPokemonServer();
+
+
         if(locationRequest == null){
             locationRequest = new LocationRequest();
             locationRequest.setInterval(5000);
@@ -147,17 +150,6 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
 
         }
     }
-
-    public void getPokemon(){
-
-
-
-
-    }
-
-
-
-
 
 }
 
