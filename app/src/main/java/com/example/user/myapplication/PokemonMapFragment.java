@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 
 import android.widget.Toast;
 
+import com.example.user.myapplication.model.PokemonMapManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -40,7 +41,10 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
     GoogleMap googleMap;
     GoogleApiClient googleAPiClient;
     LocationRequest locationRequest;
+    PokemonMapManager pokemonMapManager;
+
     boolean firstRequestLocation = true;
+
 
     public PokemonMapFragment() {
         // Required empty public constructor
@@ -65,6 +69,7 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
     @Override
     public void onMapReady(GoogleMap googleMap){
     this.googleMap = googleMap;
+        pokemonMapManager = new PokemonMapManager(googleMap);
         createGoogleApiClient();
 
 
@@ -138,13 +143,16 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
                     .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17);
             googleMap.moveCamera(cameraUpdate);
             firstRequestLocation = false;
+
+
         }
     }
 
-    public void getPokemon{
+    public void getPokemon(){
 
 
-        
+
+
     }
 
 
