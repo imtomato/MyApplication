@@ -3,43 +3,44 @@ package com.example.user.myapplication;
 
 import android.*;
 import android.Manifest;
-import android.app.Activity;
+
 import android.content.pm.PackageManager;
+import android.location.Location;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
+
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PokemonMapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
+public class PokemonMapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks
+        , OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
+        , LocationListener {
 
 
     GoogleMap googleMap;
     GoogleApiClient googleAPiClient;
-
+    LocationRequest locationRequest;
+    boolean firstRequestLocation = true;
 
     public PokemonMapFragment() {
         // Required empty public constructor
@@ -75,6 +76,7 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+            googleAPiClient.connect();
             }
         }
 
@@ -86,7 +88,20 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
             }
+            return;
         }
+
+        if(locationRequest == null){
+            locationRequest = new LocationRequest();
+            locationRequest.setInterval(5000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleAPiClient,locationRequest,this);
+
+
+        }
+
+
 
 
 
@@ -114,6 +129,28 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getContext(), "Google API Clinet Connection Failed", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(firstRequestLocation) {
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory
+                    .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17);
+            googleMap.moveCamera(cameraUpdate);
+            firstRequestLocation = false;
+        }
+    }
+
+    public void getPokemon{
+
+
+        
+    }
+
+
+
+
+
 }
 
 
