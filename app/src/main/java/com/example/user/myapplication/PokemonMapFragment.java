@@ -143,13 +143,13 @@ public class PokemonMapFragment extends SupportMapFragment implements GoogleApiC
         if(firstRequestLocation) {
 
             CameraUpdate cameraUpdate = CameraUpdateFactory
-                    .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17);
+                    .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 30);
             googleMap.moveCamera(cameraUpdate);
             firstRequestLocation = false;
-            pokemonMapManager.requestPokemonServer();
-
 
         }
+        pokemonMapManager.requestPokemonServer();
+
     }
 
 }

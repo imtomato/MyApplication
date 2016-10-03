@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class PokemonMapManager implements RequestCallback {
 
     GoogleMap googleMap;
-    HashMap <String,PokemonMarkerInfo> pokemonMarkerInfoHashMap = new
+    HashMap<String, PokemonMarkerInfo> pokemonMarkerInfoHashMap = new
             HashMap<>();
 
     public PokemonMapManager(GoogleMap googleMap) {
@@ -33,23 +33,25 @@ public class PokemonMapManager implements RequestCallback {
         (new requestTask(this)).execute("http://140.112.30.42:5001/raw_data");
 
 
-
     }
 
     @Override
     public void callback(JSONArray gyms, JSONArray pokemons, JSONArray pokeStops) {
-            addMarkerInFromJsonArray(gyms, PokemonMarkerInfo.PokemonMarkerType.GYM);
-            addMarkerInFromJsonArray(pokemons, PokemonMarkerInfo.PokemonMarkerType.POKEMON);
-            addMarkerInFromJsonArray(pokeStops, PokemonMarkerInfo.PokemonMarkerType.STOP);
+        addMarkerInFromJsonArray(gyms, PokemonMarkerInfo.PokemonMarkerType.GYM);
+        addMarkerInFromJsonArray(pokemons, PokemonMarkerInfo.PokemonMarkerType.POKEMON);
+        addMarkerInFromJsonArray(pokeStops, PokemonMarkerInfo.PokemonMarkerType.STOP);
     }
 
-    public void addMarkerInFromJsonArray(JSONArray jsonArray,PokemonMarkerInfo.PokemonMarkerType type){
-        for(int i = 0 ; i < jsonArray.length() ; i++){
+    public void addMarkerInFromJsonArray(JSONArray jsonArray, PokemonMarkerInfo.PokemonMarkerType type) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 PokemonMarkerInfo pokemonMarkerInfo = PokemonMarkerInfo.newInstanceWithJSONObject(jsonObject, type);
-                pokemonMarkerInfoHashMap.put(pokemonMarkerInfo.id,pokemonMarkerInfo);
-                pokemonMarkerInfo.addMarkerToGoogleMap(googleMap);
+                if (pokemonMarkerInfoHashMap.get(pokemonMarkerInfo.id) == null) {
+                    pokemonMarkerInfoHashMap.put(pokemonMarkerInfo.id, pokemonMarkerInfo);
+                    pokemonMarkerInfo.addMarkerToGoogleMap(googleMap);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -57,7 +59,6 @@ public class PokemonMapManager implements RequestCallback {
 
 
     }
-
 
 
     public static class requestTask extends AsyncTask<String, Void, String> {
@@ -87,13 +88,13 @@ public class PokemonMapManager implements RequestCallback {
             super.onPostExecute(s);
             Log.d("Pokemon Data:", s); //Stirng s 參數 就是 doInBackgroud做完的值
             RequestCallback requestCallback = requestCallbackWeakReference.get();
-            if(requestCallback != null && s != null){
+            if (requestCallback != null && s != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray gymsArray = jsonObject.getJSONArray("gyms");
                     JSONArray pokemonsArray = jsonObject.getJSONArray("pokemons");
                     JSONArray pokeStopsArray = jsonObject.getJSONArray("pokestops");
-                    requestCallback.callback(gymsArray,pokemonsArray,pokeStopsArray);
+                    requestCallback.callback(gymsArray, pokemonsArray, pokeStopsArray);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -106,7 +107,7 @@ public class PokemonMapManager implements RequestCallback {
 }
 
 interface RequestCallback {
-    void callback(JSONArray gyms,JSONArray pokemons,JSONArray pokeStops);
+    void callback(JSONArray gyms, JSONArray pokemons, JSONArray pokeStops);
 }
 
 
