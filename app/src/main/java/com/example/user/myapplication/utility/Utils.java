@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by user on 2016/9/22.
@@ -85,4 +88,15 @@ public class Utils {
         }
         return null;
     }
+
+    public static String TimeToString(String formate,Date date){
+        DateFormat dateFormat = new SimpleDateFormat(formate);
+
+        return dateFormat.format(date);
+    }
+
+
+
+
+
 }
