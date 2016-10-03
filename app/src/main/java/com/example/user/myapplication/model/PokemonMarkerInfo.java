@@ -1,6 +1,17 @@
 package com.example.user.myapplication.model;
 
+import android.graphics.Bitmap;
+import android.view.View;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +19,8 @@ import org.json.JSONObject;
 /**
  * Created by user on 2016/10/3.
  */
-public class PokemonMarkerInfo {
+public class PokemonMarkerInfo implements ImageLoadingListener {
+
 
     public enum PokemonMarkerType{
         GYM,POKEMON,STOP
@@ -18,7 +30,7 @@ public class PokemonMarkerInfo {
     LatLng location;
     String id;
     String imageURL;
-
+    Marker marker;
 
 
 
@@ -42,6 +54,38 @@ public class PokemonMarkerInfo {
             }
         }
         return pokemonMarkerInfo;
+    }
+
+
+    public void addMarkerToGoogleMap(GoogleMap googleMap){
+
+        MarkerOptions markerOptions = new MarkerOptions().position(location)
+                .title(id);
+        marker = googleMap.addMarker(markerOptions);
+        ImageLoader.getInstance().loadImage(imageURL,this);
+
+
+
+    }
+    @Override
+    public void onLoadingStarted(String imageUri, View view) {
+
+    }
+
+    @Override
+    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+    }
+
+    @Override
+    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(loadedImage);
+        marker.setIcon(icon);
+    }
+
+    @Override
+    public void onLoadingCancelled(String imageUri, View view) {
+
     }
 
 

@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 /**
  * Created by user on 2016/9/29.
@@ -18,6 +19,8 @@ import java.lang.ref.WeakReference;
 public class PokemonMapManager implements RequestCallback {
 
     GoogleMap googleMap;
+    HashMap <String,PokemonMarkerInfo> pokemonMarkerInfoHashMap = new
+            HashMap<>();
 
     public PokemonMapManager(GoogleMap googleMap) {
         super();
@@ -29,12 +32,32 @@ public class PokemonMapManager implements RequestCallback {
 
         (new requestTask(this)).execute("http://140.112.30.42:5001/raw_data");
 
+
+
     }
 
     @Override
     public void callback(JSONArray gyms, JSONArray pokemons, JSONArray pokeStops) {
+            addMarkerInFromJsonArray(gyms, PokemonMarkerInfo.PokemonMarkerType.GYM);
+            addMarkerInFromJsonArray(pokemons, PokemonMarkerInfo.PokemonMarkerType.POKEMON);
+            addMarkerInFromJsonArray(pokeStops, PokemonMarkerInfo.PokemonMarkerType.STOP);
+    }
+
+    public void addMarkerInFromJsonArray(JSONArray jsonArray,PokemonMarkerInfo.PokemonMarkerType type){
+        for(int i = 0 ; i < jsonArray.length() ; i++){
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                PokemonMarkerInfo pokemonMarkerInfo = PokemonMarkerInfo.newInstanceWithJSONObject(jsonObject, type);
+                pokemonMarkerInfoHashMap.put(pokemonMarkerInfo.id,pokemonMarkerInfo);
+                pokemonMarkerInfo.addMarkerToGoogleMap(googleMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
+
 
 
     public static class requestTask extends AsyncTask<String, Void, String> {
