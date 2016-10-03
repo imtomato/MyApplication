@@ -32,6 +32,8 @@ public class MainActivity extends CustomizedActivity implements View.OnClickList
     Handler uiHandler;
     ProgressBar progressBar;
 
+
+
     public static final String selectedOptionIndexKey = "selectedOptionIndex";
 
     public static final String nameOfTheTrainerKey = "nameOfTheTrainer";

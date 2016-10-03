@@ -18,6 +18,11 @@ import com.parse.ParseObject;
 //App層級最高的,代表整個App
 public class MyApplication extends Application {
 
+
+
+
+
+
     @Override
     public void onCreate(){
         super.onCreate();

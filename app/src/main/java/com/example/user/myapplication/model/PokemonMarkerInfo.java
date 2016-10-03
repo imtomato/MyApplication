@@ -76,6 +76,10 @@ public class PokemonMarkerInfo implements ImageLoadingListener {
             }
             marker.setSnippet
                     ("Remain Time:" + Utils.TimeToString("hh:mm:ss", new Date(expirationTime - time)));
+            if(marker.isInfoWindowShown()){
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
         }else if(type == PokemonMarkerType.STOP){
             Long time = System.currentTimeMillis();
             if(time > expirationTime && expirationTime > 0){
@@ -83,8 +87,10 @@ public class PokemonMarkerInfo implements ImageLoadingListener {
                 ImageLoader.getInstance().loadImage(imageURL,this);
                 return false;
             }
-            marker.setSnippet
-                    ("Remain Time:" + Utils.TimeToString("hh:mm:ss", new Date(expirationTime)));
+            if(expirationTime > 0) {
+                marker.setSnippet
+                        ("Remain Time:" + Utils.TimeToString("hh:mm:ss", new Date(expirationTime)));
+            }
         }
 
 
