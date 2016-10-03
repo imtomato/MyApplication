@@ -46,4 +46,4 @@ adjustViewBounds:
 *FaceBook
 1. facebook按鈕UI元件在customView類別裡
 2. facebook 登入視窗 要register CallbackManager ,因為登入的頁面是開一個Activity頁面覆蓋上去 故原Activity要用onActivityResult接
-3. AccessToken  
+3. AccessToken
